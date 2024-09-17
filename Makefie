@@ -1,0 +1,21 @@
+watch:
+    @if command -v air > /dev/null; then \
+        air; \
+        echo "Watching...";\
+    else \
+        read -p "Air not installed. Install? Y/n" choice; \
+        if [ "$$choice" != "n" ] && if [ "$$choice" != "N" ]; then; \
+            go install github.com/air-verse/air@latest; \
+            air; \
+            echo "watching..."
+        else \
+            echo "aborting"; \
+            exit 1; \
+        fi; \
+    fi
+
+
+run:
+    @cmd/hestiaServer -o bi
+
+.PHONY: watch
