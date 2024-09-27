@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	
 	dbService, dbErr := database.NewDatabase()
 	if dbErr != nil {
 		log.Fatalf("Error initializing database: %v", dbErr)

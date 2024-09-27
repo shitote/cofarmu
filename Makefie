@@ -15,7 +15,40 @@ watch:
     fi
 
 
-run:
-    @cmd/hestiaServer -o bi
+# Makefile for building and running hestiaServer
 
+# Variables
+APP_NAME = hestiaServer
+BIN_DIR = bin
+BIN = $(BIN_DIR)/$(APP_NAME)
+SRC = cmd/$(APP_NAME)/*.go # Adjust as needed for your source files
+
+# Default target
+.PHONY: all
+all: build
+
+# Build the application
+.PHONY: build
+build:
+	@mkdir -p $(BIN_DIR)
+	@go build -o $(BIN) $(SRC)
+
+# Run the application
+.PHONY: run
+run: build
+	@./$(BIN)
+
+# Clean up build artifacts
+.PHONY: clean
+clean:
+	@rm -f $(BIN)
+
+# Rebuild and run
+.PHONY: run-all
+run-all: clean run
+
+# Watch for changes
 .PHONY: watch
+watch:
+	@echo "Watching for changes..."
+	@ls $(SRC) | entr make run
